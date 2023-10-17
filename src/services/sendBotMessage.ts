@@ -5,7 +5,7 @@ const chatId = Bun.env.CHAT_ID;
 
 const bot = new TelegramBot(token, { polling: true });
 
-export const sendBotMessage = async (
+const sendShowBotMessage = async (
   imdbID: string,
   title: string,
   year: string,
@@ -30,3 +30,16 @@ export const sendBotMessage = async (
       console.error("Error sending message:", error);
     });
 };
+
+const sendAnyBotMessage = async (title: string) => {
+  bot
+    .sendMessage(chatId, title)
+    .then(() => {
+      console.log("Message sent successfully");
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
+};
+
+export { sendAnyBotMessage, sendShowBotMessage };

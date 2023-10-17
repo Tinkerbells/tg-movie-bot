@@ -3,8 +3,9 @@ import { generatePrompt } from "@/helpers";
 import {
   getOmdbShow,
   addShow,
-  sendBotMessage,
+  sendShowBotMessage,
   fetchCompletions,
+  sendAnyBotMessage,
 } from "@/services";
 
 const app = new Elysia();
@@ -17,7 +18,7 @@ app.post("/", async ({ body }: any) => {
       completion = await fetchCompletions(generatePrompt(body.title as string));
       show = await getOmdbShow(completion.title);
     }
-    sendBotMessage(
+    sendShowBotMessage(
       show.imdbID,
       show.Title,
       show.Year,
@@ -35,6 +36,8 @@ app.post("/", async ({ body }: any) => {
       releaseDate: show.Released,
       rating: show.imdbRating,
     });
+  } else {
+    sendAnyBotMessage(body.titie as string);
   }
 });
 
